@@ -41,4 +41,37 @@ const redisResult = async (req, res) => {
   }
 };
 
-redisResult();
+// redisResult();
+
+// Data Structure
+
+const dataStructure = async (req, res) => {
+  try {
+    await client.connect();
+
+    await client.set("user:name", "Rafiq");
+    const name = await client.get("user:name");
+    console.log(name);
+
+    await client.mSet([
+      "user:email",
+      "rafkhan9323@gmail.com",
+      "user:age",
+      "23",
+      "user:address",
+      "Peshawar",
+    ]);
+    const [email, age, address] = await client.mGet([
+      "user:email",
+      "user:age",
+      "user:address",
+    ]);
+    console.log(email, age, address);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    client.quit();
+  }
+};
+
+dataStructure();
