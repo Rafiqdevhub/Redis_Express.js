@@ -29,9 +29,11 @@ app.get("/", async (req, res) => {
     if (checkData) {
       return res.json({ data: checkData });
     }
+
     for (let i = 0; i < 100000000000; i++) {
       calculateData += i;
     }
+
     await redisClient.set("calculateData", calculateData);
     return res.json({ data: calculateData });
   } catch (error) {
